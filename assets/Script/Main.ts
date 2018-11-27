@@ -33,24 +33,35 @@ export default class NewClass extends cc.Component {
   pastTime: number = 0;
   speed: number = 0;
   score: number = 0;
+  isPlaying: boolean = false;
 
   start() {
 
   }
 
+  play(event) {
+    event.currentTarget.active = false;
+    this.isPlaying = true;
+  }
+
+  gameOver() {
+    this.isPlaying = false;
+  }
+
   update (dt) {
     this.pastTime += dt;
     this.changeBirdSprite();
+    if (!this.isPlaying) return;
     this.birdGravity();
     this.moveBg();
     this.movePipe();
   }
 
   collision(pipe: cc.Node) {
-    if (this.bird.x + 17 < pipe.x - 26) {
+    if (this.bird.x + 8.5 < pipe.x - 26) {
       return;
     }
-    if (this.bird.x - 17 > pipe.x + 26) {
+    if (this.bird.x - 8.5 > pipe.x + 26) {
       return;
     }
     // const pipeUp:cc.Node = pipe.getChildByName('pipe_up');
@@ -59,6 +70,7 @@ export default class NewClass extends cc.Component {
       return;
     }
     console.log('game over!!');
+    this.gameOver();
   }
 
   birdGravity() {
