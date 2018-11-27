@@ -20,6 +20,9 @@ export default class NewClass extends cc.Component {
   @property(cc.Node)
   bird: cc.Node = null;
 
+  @property(cc.Node)
+  obstacles: cc.Node = null;
+
   onLoad () {
     console.log(this.bird.children);
   }
@@ -36,10 +39,12 @@ export default class NewClass extends cc.Component {
     this.changeBirdSprite();
     this.birdGravity();
     this.moveBg();
+    this.movePipe();
   }
 
   birdGravity() {
     this.speed -= 0.1;
+    this.bird.rotation = -this.speed * 10;
     this.bird.y += this.speed;
   }
 
@@ -51,6 +56,22 @@ export default class NewClass extends cc.Component {
     this.bg.x -= 1;
     if (this.bg.x <= -288) {
       this.bg.x = 0;
+    }
+  }
+
+  movePipe() {
+    const [pipe_0, pipe_1, pipe_2] = this.obstacles.children;
+    pipe_0.x -= 1;
+    pipe_1.x -= 1;
+    pipe_2.x -= 1;
+    if (pipe_0.x <= -144 ) {
+      pipe_0.x = 340;
+    }
+    if (pipe_1.x <= -144 ) {
+      pipe_1.x = 340;
+    }
+    if (pipe_2.x <= -144 ) {
+      pipe_2.x = 340;
     }
   }
 
