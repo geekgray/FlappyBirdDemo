@@ -23,12 +23,16 @@ export default class NewClass extends cc.Component {
   @property(cc.Node)
   obstacles: cc.Node = null;
 
+  @property(cc.Label)
+  lbScore: cc.Label = null;
+
   onLoad () {
-    console.log(this.bird.children);
+    console.log(this.lbScore);
   }
 
   pastTime: number = 0;
   speed: number = 0;
+  score: number = 0;
 
   start() {
 
@@ -40,6 +44,21 @@ export default class NewClass extends cc.Component {
     this.birdGravity();
     this.moveBg();
     this.movePipe();
+  }
+
+  collision(pipe: cc.Node) {
+    if (this.bird.x + 17 < pipe.x - 26) {
+      return;
+    }
+    if (this.bird.x - 17 > pipe.x + 26) {
+      return;
+    }
+    // const pipeUp:cc.Node = pipe.getChildByName('pipe_up');
+    // const pipeDown:cc.Node = pipe.getChildByName('pipe_down');
+    if (this.bird.y + 12 < pipe.y + 60 && this.bird.y - 12 > pipe.y - 60) {
+      return;
+    }
+    console.log('game over!!');
   }
 
   birdGravity() {
@@ -61,18 +80,31 @@ export default class NewClass extends cc.Component {
 
   movePipe() {
     const [pipe_0, pipe_1, pipe_2] = this.obstacles.children;
-    pipe_0.x -= 1;
-    pipe_1.x -= 1;
-    pipe_2.x -= 1;
+    pipe_0.x -= 2;
+    pipe_1.x -= 2;
+    pipe_2.x -= 2;
     if (pipe_0.x <= -144 ) {
       pipe_0.x = 340;
+      pipe_0.y = Math.floor(Math.random() * 118);
+      this.score += 1;
+      this.lbScore.string =this.score.toString();
     }
     if (pipe_1.x <= -144 ) {
       pipe_1.x = 340;
+      pipe_1.y = Math.floor(Math.random() * 118);
+      this.score += 1;
+      this.lbScore.string =this.score.toString();
     }
     if (pipe_2.x <= -144 ) {
       pipe_2.x = 340;
+      pipe_2.y = Math.floor(Math.random() * 118);
+      this.score += 1;
+      this.lbScore.string =this.score.toString();
     }
+
+    this.collision(pipe_0);
+    this.collision(pipe_1);
+    this.collision(pipe_2);
   }
 
   changeBirdSprite() {
