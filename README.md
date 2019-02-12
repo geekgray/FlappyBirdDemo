@@ -1,4 +1,3 @@
-# hello-world
-Hello world new project template.
+# FlappyBirdDemo
 
-demo https://geekgray.github.io/FlappyBirdDemo/build/web-mobile/
+demo https://geekgray.github.io/FlappyBirdDemo/build/web-mobile
